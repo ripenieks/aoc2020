@@ -1,4 +1,3 @@
-*
-!*.*
-!input
+!*.cpp
+!*.h
 .gdb_history
