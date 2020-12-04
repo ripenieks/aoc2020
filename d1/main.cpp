@@ -1,32 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
+#include <iostream>
+#include <vector>
 
-struct Input {
-	size_t size;
-	char *buf;
-};
-
-size_t read_input(char *buf);
-int strtoint(char *snum);
+int str2int(std::string str);
 
 int main() {
-	FILE *fp;
-	fp = fopen("input", "r");
-	fseek(fp, 0, SEEK_END);
-	size_t size = ftell(fp);
-	fseek(fp, 0, SEEK_SET);
+	std::vector<int> numbers;
 
-	char buf[size];
-	int n = fread(buf, size, sizeof(char), fp);
-	fclose(fp);
-	if (n < 0) {
-		printf("bad fread\n");
-		exit(-1);
+	std::string input;
+
+	std::cin.tie(0);
+	while (!std::cin.eof()) {
+		std::cin >> input;
+		numbers.push_back(str2int(input));
 	}
-	buf[size] = 0;
-	printf("%s\n", buf);
+	numbers.pop_back();
+	//for (int x : numbers) {
+	//	std::cout << x << std::endl;
+	//}
+	
+	for (int x : numbers) {
+		for (int y : numbers) {
+			if (x + y == 2020) {
+				printf("%d\n", x * y);
+			}
+		}
+	}
+}
 
-	char c = "";
-	while (c != EOF)
-
+int str2int(std::string str) {
+	int res = 0;
+	for (int i = 0; i < str.length(); i++) {
+		res = 10 * res + str[i] - '0';
+	}
+	return res;
 }
