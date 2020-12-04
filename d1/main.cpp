@@ -20,11 +20,20 @@ int main() {
 	//for (int x : numbers) {
 	//	std::cout << x << std::endl;
 	//}
-	
 	for (int x : numbers) {
 		for (int y : numbers) {
 			if (x + y == 2020) {
 				printf("%d\n", x * y);
+			}
+		}
+	}
+	
+	for (int x : numbers) {
+		for (int y : numbers) {
+			for (int z : numbers) {
+				if (x + y + z == 2020) {
+					printf("%d\n", x * y * z);
+				}
 			}
 		}
 	}
