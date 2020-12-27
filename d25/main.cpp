@@ -4,8 +4,9 @@
 #include <vector>
 
 #define SUBJECT 7
+#define MAX_ITER 100000000
 
-long long unsigned int transform(long long unsigned int value, long long unsigned int subject);
+long int transform(long int value, long int subject);
 int find_loop_size(long int public_key);
 int find_key(int pk1, int ls1, int pk2, int ls2);
 
@@ -27,32 +28,31 @@ int main() {
 	std::cout << enc_key << std::endl;
 }
 
-long long unsigned int transform(long long unsigned int value, long long unsigned int subject) {
-	return (long long int)(value * subject) % 20201227;
+long int transform(long int value, long int subject) {
+	return (value * subject) % 20201227;
 }
 
 int find_loop_size(long int public_key) {
 	int loop_size = 0;
 	int num = 1;
-	while (num != public_key && loop_size < 100000000) {
+	while (num != public_key && loop_size < MAX_ITER) {
 		//std::cout << "num: " << num << " loop_size: " << loop_size << std::endl;
 		num = transform(num, SUBJECT);
 		loop_size++;
 	}
-	if (loop_size > 99999999) std::cout << "sadge" << std::endl;
+	if (loop_size > MAX_ITER-1) std::cout << "sadge" << std::endl;
 	return loop_size;
 }
 
 int find_key(int pk1, int ls1, int pk2, int ls2) {
-	long long int key1 = 1;
+	long int key1 = 1;
 	for (int i = 0; i < ls1; i++) {
 		key1 = transform(key1, pk2);
 	}
-	long long int key2 = 1;
+	long int key2 = 1;
 	for (int i = 0; i < ls2; i++) {
 		key2 = transform(key2, pk1);
 	}
-	std::cout << key1 << std::endl << key2 << std::endl;
 	if (key1 == key2) return key1;
 	else return -1;
 }
