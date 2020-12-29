@@ -21,12 +21,33 @@ int main() {
 	}
 
 	int max = 0;
+	int min = 1000;
+	vector<int> ids;
 	for (string code : lines) {
 		int tmp = get_seat_id(code);
+		ids.push_back(tmp);
+	//	cout << tmp << endl;
 		if (tmp > max) max = tmp;
+		if (tmp < min) min = tmp;
+	}
+	int min_row = min / 8;
+	int max_row = max / 8;
+
+	int sum_all = 0;
+	for (int i = min_row+1; i < max_row; i++) {
+		for (int j = 0; j < 8; j++) {
+			sum_all = sum_all + (i * 8 + j);
+		}
 	}
 
-	cout << max << endl;
+	int sum_actual = 0;
+	// exclude first and last row from the list
+	min = ((min_row + 1) * 8) - 1;
+	max = (max_row) * 8;
+	for (int i : ids) {
+		if (i > min && i < max) sum_actual = sum_actual + i;	
+	}
+	cout << sum_all - sum_actual << endl;
 }
 
 int get_seat_id(string code) {
@@ -36,7 +57,6 @@ int get_seat_id(string code) {
 	int divisor = ROWS;
 	for (i; i < code.length()-3; i++) {
 		divisor = divisor/2;
-		std::cout << code[i];
 		if (code[i] == 'F') row = row - divisor;
 	}
 	// cols
@@ -48,3 +68,5 @@ int get_seat_id(string code) {
 	}
 	return row * 8 + column;
 }
+
+	
